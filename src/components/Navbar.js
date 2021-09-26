@@ -18,9 +18,11 @@ const Navbar = () => {
         </div>
       ))}
       <div>
+        <Link to="/checkout">
         {cartItemsTotal}
         <CartSVG width={25} />
         {cartPriceTotal}
+        </Link>
       </div>
     </div>
   );
