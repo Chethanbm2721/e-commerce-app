@@ -21,13 +21,9 @@ if(filters.expensive){
 return result;
 }
 
-const Category = () => {
-  const {id}=useParams();
+const Category = ({category}) => {
 
-  const category=categories.find(c=>c.id===id);
-  const categoryName=category.name;
-
-  const [products]=useState(fakeProducts.filter(p=>p.categoryId===id));
+  const [products]=useState(fakeProducts.filter(p=>p.categoryId===category.id));
 
   const [filter,dispatchFilter]=useFilters({
     delivery:false,
@@ -73,7 +69,7 @@ const Category = () => {
       />
     </div>
     <div>
-      <h3>{categoryName}</h3>
+      <h3>{category.name}</h3>
       <div>
         <Products products={filteredProducts} />
       </div>
@@ -82,4 +78,16 @@ const Category = () => {
   )
 }
 
-export default Category
+
+const CategoryContainer=()=>{
+  const {id}=useParams();
+
+  const category=categories.find(c=>c.id===id);
+
+  if(!category){
+    return <div>Category with id {id} does not exist</div>
+  }
+  return <Category category={category} />
+};
+
+export default CategoryContainer;
