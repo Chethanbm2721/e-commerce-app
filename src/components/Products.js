@@ -1,6 +1,17 @@
-import React from 'react'
+import React, { useCallback } from 'react'
+import { useCartDispatch } from '../lib/cart.context'
 
 const Products = ({products}) => {
+
+  const dispatchCart=useCartDispatch();
+
+  const handleAddToCart=useCallback((id,price,inStock)=>{
+if(!inStock){
+  return;
+}
+dispatchCart({type:'ADD_ONE',id,price});
+  },[dispatchCart])
+
   if(products.length===0) {
   return <div>No products found</div>
   }
@@ -19,7 +30,10 @@ const Products = ({products}) => {
 
         {delivery && <div>Delivery available</div>}
 
-        <button type="button" disabled={!inStock}>
+        <button 
+        type="button" 
+        disabled={!inStock}
+        onClick={()=>handleAddToCart(restOfProduct.id,price,inStock)}>
           Add to cart
         </button>
     </div>
