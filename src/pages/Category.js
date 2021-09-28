@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import { useParams } from 'react-router-dom';
+import { Col, Row } from 'reactstrap';
 import FilterCheckbox from '../components/FilterCheckbox';
 import Products from '../components/Products';
 import categories from '../db/categories.json'
@@ -43,9 +44,10 @@ const Category = ({category}) => {
    },[dispatchFilter]);
 
   return (
-    <div>
-      <div>
-        <h3>Filters</h3>
+    <Row>
+       <Col xs={12} md={6} className="position-relative">
+      <div className="fixed-md">
+      <h2 className="h3">Filters</h2>
       <FilterCheckbox
       id="delivery"
       name="delivery"
@@ -67,14 +69,18 @@ const Category = ({category}) => {
       onChange={OnCheckboxChange}
       label="Expensive (100+USD)"
       />
+      <div className="mt-">
+            Showing {filteredProducts.length} out of {products.length}
+          </div>
     </div>
-    <div>
-      <h3>{category.name}</h3>
+    </Col>
+    <Col xs={12} md={6} className="mt-3 mt-md-0">
+        <h1 className="h3">{category.name}</h1>
       <div>
         <Products products={filteredProducts} />
       </div>
-    </div>
-    </div>
+    </Col>
+    </Row>
   )
 }
 

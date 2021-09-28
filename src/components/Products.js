@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react'
+import { Button, Card, CardBody, CardImg, CardSubtitle, CardText, CardTitle } from 'reactstrap';
 import { useCartDispatch } from '../lib/cart.context'
 
 const Products = ({products}) => {
@@ -17,26 +18,31 @@ dispatchCart({type:'ADD_ONE',id,price});
   }
 
    return products.map(({currency,delivery,inStock,name,price,thumbnail,...restOfProduct})=> (
-    <div key={restOfProduct.id}>
-      <img src={thumbnail} alt={name} width={50} />
-      
-      <div>{name}</div>
+    <Card key={restOfProduct.id} className="mb-3">
+      <CardImg top-width="100%" src={thumbnail} alt={name} className="h-50" />
+      <CardBody className="font-weight">
+      <CardTitle className="h5">{name}</CardTitle>
 
-      <div>
-        {currency} {price}
-        </div>
+      <CardSubtitle className="h5 mb-2">
+        ${price}
+        </CardSubtitle>
 
-        <div>{inStock?'In stock':'Out of stock'}</div>
+        {delivery && <CardText className="mb-1">Delivery available</CardText>}
+        <CardText className={inStock ? 'text-success' : 'text-danger'}>
 
-        {delivery && <div>Delivery available</div>}
+        {inStock?'In stock':'Out of stock'}
+        </CardText>
 
-        <button 
+
+        <Button 
         type="button" 
+        color="dark"
         disabled={!inStock}
         onClick={()=>handleAddToCart(restOfProduct.id,price,inStock)}>
           Add to cart
-        </button>
-    </div>
+        </Button>
+        </CardBody>
+    </Card>
   ))}
 
-export default Products
+export default Products;
